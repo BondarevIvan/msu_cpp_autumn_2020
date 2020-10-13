@@ -1,5 +1,4 @@
 #include "allocator.h"
-#include <iostream>
 #include <memory>
 
 namespace NAllocator

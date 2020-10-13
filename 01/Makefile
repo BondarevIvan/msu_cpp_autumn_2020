@@ -10,4 +10,4 @@ clean:
 	rm allocator
 
 test:
-	make -f Makefile; ./allocator; make clean
+	make; ./allocator; make clean
