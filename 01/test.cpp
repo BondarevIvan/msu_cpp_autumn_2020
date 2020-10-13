@@ -13,5 +13,14 @@ int main()
     assert(world);
     char* cell = allocator.alloc(1);
     assert(!cell);
+    allocator.reset();
+    char* hello_world = allocator.alloc(10);
+    assert(hello_world);
+    const char* HelloWorld = "helloWorld";
+    for (int i = 0; i < 10; ++i)
+    {
+        hello_world[i] = HelloWorld[i];
+    }
+    std::cout << "SUCCESS!!!!!!!!!!!\n";
     return 0;
 }

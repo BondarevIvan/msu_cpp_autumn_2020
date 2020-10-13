@@ -8,3 +8,6 @@ allocator: test.cpp allocator.cpp
 
 clean:
 	rm allocator
+
+test:
+	make -f Makefile; ./allocator; make clean
