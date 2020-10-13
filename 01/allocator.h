@@ -1,6 +1,8 @@
+#pragma once
+
 namespace NAllocator
 {
-    using size_t = unsigned long long;
+    using size_t = unsigned long;
     class Allocator
     {
     public:

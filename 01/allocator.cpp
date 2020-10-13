@@ -1,5 +1,5 @@
 #include "allocator.h"
-#include <memory>
+#include <cstring>
 
 namespace NAllocator
 {
@@ -10,7 +10,7 @@ namespace NAllocator
         auto oldSize = currentSize; 
         currentSize = offset + maxSize;
         auto* pNewMemory = new char[currentSize];
-        std::copy(memory, memory + oldSize, pNewMemory);
+        std::memcpy(pNewMemory, memory, oldSize * sizeof(*pNewMemory));
         delete[] memory;
         memory = pNewMemory;
     }
