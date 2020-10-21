@@ -10,4 +10,4 @@ clean:
 	rm parser
 
 test:
-	make; ./parser; make clean
+	@echo "run 'make' before 'make test'"; ./parser; rm parser

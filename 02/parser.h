@@ -15,10 +15,10 @@ namespace NParser
         TokenParser();
         TokenParser(const std::string& pattern);
         TokenParser(const TokenParser&) = delete;
-        void setStartCallback(StartFinishStringCallback callback);
-        void setFinishCallback(StartFinishStringCallback callback);
-        void setStringCallback(StringCallback callback);
-        void setDigitStringCallback(DigitCallback callback);
+        void setStartCallback(StartFinishStringCallback&& callback);
+        void setFinishCallback(StartFinishStringCallback&& callback);
+        void setStringCallback(StringCallback&& callback);
+        void setDigitStringCallback(DigitCallback&& callback);
         void parse();
         void setPattern(const std::string& pat);
     private:

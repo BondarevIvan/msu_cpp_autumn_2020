@@ -1,6 +1,6 @@
 #include "parser.h"
 
-#include <iostream>
+#include <ctype.h>
 
 namespace NParser
 {
@@ -12,19 +12,19 @@ namespace NParser
     {
         init();
     }
-    void TokenParser::setStartCallback(StartFinishStringCallback callback)
+    void TokenParser::setStartCallback(StartFinishStringCallback&& callback)
     {
         startStringCallback = std::move(callback);
     }
-    void TokenParser::setFinishCallback(StartFinishStringCallback callback)
+    void TokenParser::setFinishCallback(StartFinishStringCallback&& callback)
     {
         finishStringCallback = std::move(callback);
     }
-    void TokenParser::setStringCallback(StringCallback callback)
+    void TokenParser::setStringCallback(StringCallback&& callback)
     {
         stringCallback = std::move(callback);
     }
-    void TokenParser::setDigitStringCallback(DigitCallback callback)
+    void TokenParser::setDigitStringCallback(DigitCallback&& callback)
     {
         digitalCallback = std::move(callback);
     }
@@ -39,13 +39,9 @@ namespace NParser
         };
         EState state = EState::ES_NONE;
         std::string currentElement = "";
-        auto isDigit = [](char sym) -> bool
-        {
-            return sym >= '0' && sym <= '9';
-        };
         for (auto sym : pattern)
         {
-            if (isDigit(sym))
+            if (isdigit(sym))
             {
                 if (state == EState::ES_NONE)
                     state = EState::ES_IN_DIGIT;
