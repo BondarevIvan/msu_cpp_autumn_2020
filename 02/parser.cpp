@@ -39,48 +39,38 @@ namespace NParser
         };
         EState state = EState::ES_NONE;
         std::string currentElement = "";
-        for (auto sym : pattern)
-        {
-            if (isdigit(sym))
-            {
-                if (state == EState::ES_NONE)
-                    state = EState::ES_IN_DIGIT;
-                if (state == EState::ES_IN_DIGIT)
-                {
-                    currentElement.push_back(sym);
-                }
-                else if (state == EState::ES_IN_TOKEN)
-                {
-                    stringCallback(currentElement);
-                    currentElement = std::string({ sym });                    
-                }
-                state = EState::ES_IN_DIGIT;
-            } else
-            {   
-                if (state == EState::ES_NONE)
-                    state = EState::ES_IN_TOKEN;
-                if (state == EState::ES_IN_DIGIT)
-                {
-                    digitalCallback(std::stoi(currentElement));
-                    currentElement = std::string({ sym });
-                }
-                else if (state == EState::ES_IN_TOKEN)
-                {
-                    currentElement.push_back(sym);
-                }
-                state = EState::ES_IN_TOKEN;
-            }
-        }
-        if (!currentElement.empty())
+        auto changeState = [&](char sym)
         {
             if (state == EState::ES_IN_DIGIT)
             {
                 digitalCallback(std::stoi(currentElement));
-            } else if (state == EState::ES_IN_TOKEN)
+                state = EState::ES_IN_TOKEN;
+            }
+            else if (state == EState::ES_IN_TOKEN)
             {
                 stringCallback(currentElement);
+                state = EState::ES_IN_DIGIT;
+            }
+            currentElement = std::string({ sym });
+        };
+        for (auto sym : pattern)
+        {
+            EState currentState = EState::ES_IN_TOKEN;
+            if (isdigit(sym))
+                currentState = EState::ES_IN_DIGIT;
+            if (state == EState::ES_NONE)
+            {
+                state = currentState;
+            }
+            if (currentState != state)
+            {
+                changeState(sym);
+            } else
+            {
+                currentElement.push_back(sym);
             }
         }
+        changeState('\0');
         finishStringCallback(pattern);
     }
     void TokenParser::setPattern(const std::string& pat)
