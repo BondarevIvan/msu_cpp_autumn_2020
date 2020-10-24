@@ -5,7 +5,7 @@
 namespace NMatrix
 {
 
-    void Matrix::Row::setData(ElementType* &values)
+    void Matrix::Row::setData(ElementType* values)
     {
         pValues = values;
     }

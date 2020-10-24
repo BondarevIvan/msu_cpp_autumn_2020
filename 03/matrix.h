@@ -10,7 +10,7 @@ namespace NMatrix
         class Row
         {
         public:
-            void setData(ElementType* &values);
+            void setData(ElementType* values);
             void setNumRow(size_t row);
             void setSizeRow(size_t size);
             ElementType& operator[](size_t numElement);
